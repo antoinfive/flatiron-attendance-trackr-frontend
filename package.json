@@ -1,0 +1,19 @@
+{
+  "name": "flatiron-attendance-trackr-frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antoinfive/flatiron-attendance-trackr-frontend.git"
+  },
+  "author": "Antoin Campbell & Sophie DeBennedetto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/antoinfive/flatiron-attendance-trackr-frontend/issues"
+  },
+  "homepage": "https://github.com/antoinfive/flatiron-attendance-trackr-frontend#readme"
+}
