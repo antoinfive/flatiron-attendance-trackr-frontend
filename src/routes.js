@@ -13,12 +13,15 @@ export default (
    </Route> 
 );
 
-function authenticate(nextState, replace) {
-  if (!auth.loggedIn()) {
-    replace({
-      pathname: '/login',
-      state: { nextPathname: nextState.location.pathname }
-    })
-  }
+function authenticate(nextState, replace, callback) {
+  auth.loggedIn().then(function(loggedIn) {
+      if (!loggedIn) {
+        replace({
+          pathname: '/login',
+          state: { nextPathname: nextState.location.pathname }
+        })
+      }
+      callback();
+  });
 }
 

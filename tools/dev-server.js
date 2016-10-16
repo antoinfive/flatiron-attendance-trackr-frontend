@@ -7,23 +7,12 @@ import bodyParser from 'body-parser';
 import session from 'express-session'
 import request from 'request'
 
-// var FileStore = require('session-file-store')(session);
-
-// var express = require('express');
-// var router = express.Router();
-// var request = require('request');
-
-
 /* eslint-disable no-console */
 
 const port = 3000;
 const app = express();
 const compiler = webpack(config);
 
-// app.use(cookieSession({
-//   name: 'session',
-//   keys: ['jwt', 'testing']
-// }))
 
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
@@ -41,8 +30,7 @@ app.use(session({
     secure: false,
     maxAge: 2160000000,
     httpOnly: false
-  }
- 
+  } 
 }));
 
 app.get('/authenticate', function(req, res) {
@@ -72,6 +60,15 @@ app.get('/fetchCurrentUser', function(req, res, next) {
     }
   }).pipe(res);
 });
+
+app.get('http://localhost:3000/fetchAttendanceRecords', function(req, res) {
+  request({
+    url: 'http://localhost:5000/api/schedules/1/attendance_records',
+    headers: {
+      "Authorization": `Bearer ${session.jwt}`
+    }
+  }).pipe(res)
+})
 
 // app.get('/getStudents', function(req, res) {
 //   // api call to rails using token from req.session.jwt
