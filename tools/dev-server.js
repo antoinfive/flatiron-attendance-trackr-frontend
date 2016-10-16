@@ -36,7 +36,6 @@ app.use(session({
 app.get('/authenticate', function(req, res) {
   console.log(session)
   console.log(session.jwt)
-  console.log(session && session.jwt)
   session.jwt ? res.send(true) : res.send(false)
 })
 

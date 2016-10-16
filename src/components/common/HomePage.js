@@ -14,6 +14,8 @@ class HomePage extends React.Component {
       this.props.actions.fetchAttendanceRecords();
     }
 
+    // if current use is admin, also get students
+
   }
   render() {
     return ( 
