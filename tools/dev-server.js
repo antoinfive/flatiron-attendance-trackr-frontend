@@ -34,7 +34,7 @@ app.use(session({
 }));
 
 app.get('/authenticate', function(req, res) {
-  console.log(session)
+  console.log('in authenticate')
   console.log(session.jwt)
   session.jwt ? res.send(true) : res.send(false)
 })
@@ -43,7 +43,7 @@ app.get('/Finishlogin', function(req, res) {
   console.log('inside express login  ... request jwt query next')
   console.log('writing to session object')
   session.jwt = req.query.jwt
-  console.log('logging session object')
+
   res.redirect('/')
  
 })
