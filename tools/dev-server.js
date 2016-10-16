@@ -4,21 +4,29 @@ import path from 'path';
 import config from '../webpack.config.dev';
 import open from 'open';
 import bodyParser from 'body-parser';
-var localStorage = require('localStorage')
-// import {LocalStorage} from 'node-localstorage'
-// global.localStorage = require('localStorage')
-// var store = require('./store')
-// store.set('foo', 1)
-// console.log(store.get('foo'))
+// import cookieSession from 'cookie-session'
+import session from 'express-session'
+import request from 'request'
 
-// var localStorage = new LocalStorage('./scratch')
-// /* eslint-disable no-console */
+var FileStore = require('session-file-store')(session);
+
+// var express = require('express');
+// var router = express.Router();
+// var request = require('request');
+
+
+ /* eslint-disable no-console */
 
 
 
 const port = 3000;
 const app = express();
 const compiler = webpack(config);
+
+// app.use(cookieSession({
+//   name: 'session',
+//   keys: ['jwt', 'testing']
+// }))
 
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
@@ -27,26 +35,48 @@ app.use(require('webpack-dev-middleware')(compiler, {
 
 app.use(require('webpack-hot-middleware')(compiler));
 
-var jsonParser = bodyParser.json()
+app.use(session({
+  name: 'server-session-cookie-id',
+  secret: 'my express secret',
+  saveUninitialized: true,
+  resave: true,
+  cookie: {
+    secure: false,
+    maxAge: 2160000000,
+    httpOnly: false
+  },
+  store: new FileStore()
+}));
 
 app.get('/login', function(req, res) {
   console.log('you did it')
   console.log(req.query.jwt)
-  localStorage.setItem('jwt', req.query.jwt)
+  // req.cookies.set('jwt', req.query.jwt)
+  req.session.jwt = req.query.jwt
+  req.session.save
+  console.log('wrote to session??')
+  console.log(req.session)
   res.redirect('/')
-  // const jwt = req.body.jwt
-  // console.log(req.body.jwt);
-  // // window.sessionStorage.setItem('jwt', jwt)
-  // console.log(localStorage.getItem('jwt'))
-  // res.status(204)
-  // localStorage.setItem('jwt', 'hi');
-
-
-  //fetch('http://localhost:3000')
-  // res.redirect('/')
-  // put the token from the req body in sessionStorage
-  // redirect somehow to get * 
+  
 })
+
+app.get('/fetchCurrentUser', function(req, res, next) {
+  console.log(req.session)
+  // console.log(req.cookies.get('jwt'))
+  req.session.testing = 'testing session persistance'
+  console.log(req.session.jwt)
+  console.log('in express fetch current user')
+  request({
+    uri: 'http://localhost:5000/api/me',
+    headers: {
+      "Authorization": `Bearer ${req.session.jwt}`
+    }
+  }).pipe(res);
+});
+
+// app.get('/getStudents', function(req, res) {
+//   // api call to rails using token from req.session.jwt
+// })
 
 app.get('*', function(req, res) {
   console.log('inside get * after redirect')
