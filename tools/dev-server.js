@@ -61,7 +61,7 @@ app.get('/fetchCurrentUser', function(req, res, next) {
   }).pipe(res);
 });
 
-app.get('http://localhost:3000/fetchAttendanceRecords', function(req, res) {
+app.get('/fetchAttendanceRecords', function(req, res) {
   request({
     url: 'http://localhost:5000/api/schedules/1/attendance_records',
     headers: {

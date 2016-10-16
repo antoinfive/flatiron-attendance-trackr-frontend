@@ -6,13 +6,13 @@ import * as attendanceRecordActions from '../../actions/attendanceRecordActions'
 
 class HomePage extends React.Component {
   componentWillMount() {
-    // if (Object.keys(this.props.currentUser).length === 0) {
-    //   this.props.actions.fetchCurrentUser();
-    // }
+    if (Object.keys(this.props.currentUser).length === 0) {
+      this.props.actions.fetchCurrentUser();
+    }
 
-    // if (this.props.attendanceRecords.length == 0) {
-    //   this.props.actions.fetchAttendanceRecords();
-    // }
+    if (this.props.attendanceRecords.length == 0) {
+      this.props.actions.fetchAttendanceRecords();
+    }
 
   }
   render() {
