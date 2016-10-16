@@ -4,20 +4,17 @@ import path from 'path';
 import config from '../webpack.config.dev';
 import open from 'open';
 import bodyParser from 'body-parser';
-// import cookieSession from 'cookie-session'
 import session from 'express-session'
 import request from 'request'
 
-var FileStore = require('session-file-store')(session);
+// var FileStore = require('session-file-store')(session);
 
 // var express = require('express');
 // var router = express.Router();
 // var request = require('request');
 
 
- /* eslint-disable no-console */
-
-
+/* eslint-disable no-console */
 
 const port = 3000;
 const app = express();
@@ -44,32 +41,27 @@ app.use(session({
     secure: false,
     maxAge: 2160000000,
     httpOnly: false
-  },
-  store: new FileStore()
+  }
+ 
 }));
 
 app.get('/login', function(req, res) {
-  console.log('you did it')
-  console.log(req.query.jwt)
-  // req.cookies.set('jwt', req.query.jwt)
-  req.session.jwt = req.query.jwt
-  req.session.save
-  console.log('wrote to session??')
-  console.log(req.session)
+  console.log('inside express login  ... request jwt query next')
+  console.log('writing to session object')
+  session.jwt = req.query.jwt
+  console.log('logging session object')
   res.redirect('/')
-  
+ 
 })
 
 app.get('/fetchCurrentUser', function(req, res, next) {
-  console.log(req.session)
-  // console.log(req.cookies.get('jwt'))
-  req.session.testing = 'testing session persistance'
-  console.log(req.session.jwt)
   console.log('in express fetch current user')
+  console.log('logging session object')
+  console.log(session.jwt)  
   request({
     uri: 'http://localhost:5000/api/me',
     headers: {
-      "Authorization": `Bearer ${req.session.jwt}`
+      "Authorization": `Bearer ${session.jwt}`
     }
   }).pipe(res);
 });
@@ -79,7 +71,7 @@ app.get('/fetchCurrentUser', function(req, res, next) {
 // })
 
 app.get('*', function(req, res) {
-  console.log('inside get * after redirect')
+  console.log('inside home')
   res.sendFile(path.join( __dirname, '../src/index.html'));
 });
 
