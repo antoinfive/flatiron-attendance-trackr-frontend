@@ -1,7 +1,9 @@
 import React from 'react';
-import { Calendar } from 'react-bootstrap-calendar'
+import DayPicker, { DateUtils } from 'react-day-picker'
+import "../../assets/calendar-style.css"
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+
 import * as currentUserActions from '../../actions/currentUserActions'
 import * as attendanceRecordActions from '../../actions/attendanceRecordActions'
 
@@ -29,7 +31,10 @@ class ScheduleContainer extends React.Component {
       <div>
         <div> {currentUser.first_name} </div>
         <div> {attendanceRecords} </div>
-        
+        <DayPicker
+          initialMonth={ new Date(2016, 1) }
+          
+        /> 
       </div>
 
     )
@@ -46,3 +51,4 @@ function mapDispatchToProps(dispatch) {
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(ScheduleContainer);
+
