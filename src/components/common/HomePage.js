@@ -1,15 +1,39 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as currentUserActions from '../../actions/currentUserActions'
+import * as attendanceRecordActions from '../../actions/attendanceRecordActions'
 
-const HomePage = () => {
-  return ( 
-    <div className="jumbotron">
-      <h1>Hello, world!</h1>
-      <p>...</p>
-      <p><a className="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
-    </div>
-  )
-}; 
+class HomePage extends React.Component {
+  componentWillMount() {
+    if (Object.keys(this.props.currentUser).length === 0) {
+      this.props.actions.fetchCurrentUser();
+    }
 
-export default HomePage;
+    if (this.props.attendanceRecords.length == 0) {
+      this.props.actions.fetchAttendanceRecords();
+    }
+
+    // if current use is admin, also get students
+
+  }
+  render() {
+    return ( 
+      <div className="jumbotron">
+        <h1>Hello, world!</h1>
+        <p>...</p>
+      </div>
+    )
+  }
+}
+
+function mapStateToProps(state, ownProps) {
+  return {currentUser: state.currentUser, attendanceRecords: state.attendanceRecords}
+}
+
+function mapDispatchToProps(dispatch) {
+  return {actions: bindActionCreators(Object.assign(currentUserActions, attendanceRecordActions), dispatch)}
+}
 
 
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
