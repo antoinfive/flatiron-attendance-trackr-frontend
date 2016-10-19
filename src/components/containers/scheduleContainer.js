@@ -3,7 +3,7 @@ import DayPicker, { DateUtils } from 'react-day-picker'
 import "../../assets/calendar-style.css"
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-
+import AttendanceRecordContainer from '../containers/attendanceRecordContainer.js'
 import * as currentUserActions from '../../actions/currentUserActions'
 import * as attendanceRecordActions from '../../actions/attendanceRecordActions'
 
@@ -27,14 +27,16 @@ class ScheduleContainer extends React.Component {
     const attendanceRecords = this.props.attendanceRecords.map((record) => { 
       return <p key={record.id}>{record}</p>
     })
+
     return ( 
       <div>
         <div> {currentUser.first_name} </div>
         <div> {attendanceRecords} </div>
         <DayPicker
-          initialMonth={ new Date(2016, 1) }
-          
+          initialMonth={ new Date(2016, 9) }
+          onDayClick={(event, day) => {console.log(day)}}
         /> 
+        <AttendanceRecordContainer />
       </div>
 
     )
