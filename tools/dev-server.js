@@ -62,7 +62,7 @@ app.get('/fetchCurrentUser', function(req, res, next) {
 
 app.get('/fetchAttendanceRecords', function(req, res) {
   request({
-    url: 'http://localhost:5000/api/schedules/1/attendance_records',
+    url: 'http://localhost:5000/api/attendance_records',
     headers: {
       "Authorization": `Bearer ${session.jwt}`
     }
