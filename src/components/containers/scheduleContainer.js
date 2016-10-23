@@ -3,14 +3,21 @@ import DayPicker, { DateUtils } from 'react-day-picker'
 import "../../assets/calendar-style.css"
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import AttendanceRecordContainer from '../containers/attendanceRecordContainer.js'
-import * as currentUserActions from '../../actions/currentUserActions'
-import * as attendanceRecordActions from '../../actions/attendanceRecordActions'
+import AttendanceRecordContainer from '../containers/attendanceRecordContainer.js';
+import * as currentUserActions from '../../actions/currentUserActions';
+import * as attendanceRecordActions from '../../actions/attendanceRecordActions';
+import * as instructorActions from '../../actions/instructorActions';
 
 
 class ScheduleContainer extends React.Component {
-  componentWillMount() {
-    if (Object.keys(this.props.currentUser).length === 0) {
+
+  currentUserPresent() {
+    return Object.keys(this.props.currentUser).length > 0 ? true : false
+  }
+
+  componentDidMount() {
+    console.log('in CDM')
+    if (!this.currentUserPresent()) {
       this.props.actions.fetchCurrentUser();
     }
 
@@ -18,24 +25,22 @@ class ScheduleContainer extends React.Component {
       this.props.actions.fetchAttendanceRecords();
     }
 
-    // if current use is admin, also get students
-
   }
-  render() {
 
+  render() {
     const currentUser = this.props.currentUser
-    const attendanceRecords = this.props.attendanceRecords.map((record) => { 
-      return <p key={record.id}>{record}</p>
+    const attendanceRecords = this.props.attendanceRecords.map((record, i) => { 
+      return <p key={i}>{record.date}</p>
     })
 
     return ( 
       <div>
         <div> {currentUser.first_name} </div>
         <div> {attendanceRecords} </div>
+        {this.props.currentUser.instructor ? <StudentsContainer /> : null}
         <DayPicker
           initialMonth={ new Date(2016, 9) }
-          onDayClick={(event, day) => {console.log(day)}}
-        /> 
+          onDayClick={(event, day) => {console.log(day)}}/> 
         <AttendanceRecordContainer />
       </div>
 
@@ -44,11 +49,15 @@ class ScheduleContainer extends React.Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  return {currentUser: state.currentUser, attendanceRecords: state.attendanceRecords}
+  if (state.currentUser.instructor) {    
+    return {currentUser: state.currentUser, attendanceRecords: state.attendanceRecords, students: state.students}
+  } else {
+    return {currentUser: state.currentUser, attendanceRecords: state.attendanceRecords}
+  }
 }
 
 function mapDispatchToProps(dispatch) {
-  return {actions: bindActionCreators(Object.assign(currentUserActions, attendanceRecordActions), dispatch)}
+  return {actions: bindActionCreators(Object.assign(currentUserActions, attendanceRecordActions, instructorActions), dispatch)}
 }
 
 

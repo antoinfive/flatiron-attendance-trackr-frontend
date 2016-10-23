@@ -1,4 +1,5 @@
 export default {
   currentUser: {},
-  attendanceRecords: []
+  attendanceRecords: [],
+  students: []
 }

@@ -1,0 +1,1 @@
+// use componentDidMount to make API call to fetch all students, pass as props to studentList
