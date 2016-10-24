@@ -3,11 +3,11 @@ import DayPicker, { DateUtils } from 'react-day-picker'
 import "../../assets/calendar-style.css"
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import AttendanceRecordContainer from '../containers/attendanceRecordContainer.js';
+import AttendanceRecordContainer from './attendanceRecordContainer';
+import StudentsContainer from './studentsContainer';
 import * as currentUserActions from '../../actions/currentUserActions';
 import * as attendanceRecordActions from '../../actions/attendanceRecordActions';
 import * as instructorActions from '../../actions/instructorActions';
-
 
 class ScheduleContainer extends React.Component {
 
