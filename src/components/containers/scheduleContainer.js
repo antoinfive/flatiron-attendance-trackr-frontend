@@ -28,20 +28,17 @@ class ScheduleContainer extends React.Component {
   }
 
   render() {
-    const currentUser = this.props.currentUser
-    const attendanceRecords = this.props.attendanceRecords.map((record, i) => { 
-      return <p key={i}>{record.date}</p>
-    })
-
     return ( 
       <div>
-        <div> {currentUser.first_name} </div>
-        <div> {attendanceRecords} </div>
-        {this.props.currentUser.instructor ? <StudentsContainer /> : null}
-        <DayPicker
-          initialMonth={ new Date(2016, 9) }
-          onDayClick={(event, day) => {console.log(day)}}/> 
-        <AttendanceRecordContainer />
+        <div className="col-lg-12">
+          {this.props.currentUser.instructor ? <StudentsContainer /> : null}
+          <div className='col-lg-6'>
+            <DayPicker
+            initialMonth={ new Date(2016, 9) }
+            onDayClick={(event, day) => {console.log(day)}}/> 
+          </div>
+          <AttendanceRecordContainer />
+        </div>
       </div>
 
     )

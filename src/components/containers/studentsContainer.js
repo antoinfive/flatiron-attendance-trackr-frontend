@@ -15,11 +15,12 @@ class StudentsContainer extends React.Component {
 
   render() {
     const students = this.props.students.map((student, i) => { 
-      return <p key={i}>{student.first_name}</p>
+      return <p key={i}>{student.first_name} {student.last_name}</p>
     })
 
     return ( 
-      <div>
+      <div className="col-lg-4" style={{paddingLeft: "5%"}}>
+        <h2>Students</h2>
         {students}
       </div>
 
