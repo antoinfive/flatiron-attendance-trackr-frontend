@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as instructorActions from '../../actions/instructorActions';
-
+import StudentList from '../studentList';
 
 class StudentsContainer extends React.Component {
 
@@ -14,14 +14,10 @@ class StudentsContainer extends React.Component {
   }
 
   render() {
-    const students = this.props.students.map((student, i) => { 
-      return <p key={i}>{student.first_name} {student.last_name}</p>
-    })
-
     return ( 
-      <div className="col-lg-4" style={{paddingLeft: "5%"}}>
+      <div className="col-lg-4">
         <h2>Students</h2>
-        {students}
+        <StudentList students={this.props.students} />
       </div>
 
     )
