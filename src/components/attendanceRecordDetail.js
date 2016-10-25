@@ -10,7 +10,6 @@ const AttendanceRecordDetail = (props) => {
   }
 
   function recordInfo() {
-    debugger;
     if (props.record) {
       if (props.record.arrived) {   
         const date = new Date(props.record.arrived_at)   

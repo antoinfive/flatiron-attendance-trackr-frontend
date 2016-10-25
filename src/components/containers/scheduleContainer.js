@@ -65,15 +65,30 @@ class ScheduleContainer extends React.Component {
     return (day.getDay() === 0 || day.getDay() === 6);
   }
 
+  absentStudentIdsForSelectedDay() {
+    if (this.props.attendanceRecords.length > 0) {
+      var that = this
+      const recordsBySelectedDate = this.props.attendanceRecords.find(recordsByDate => {
+          const date = new Date(recordsByDate.date)
+          return date.toDateString() == that.state.selectedDay.toDateString()
+        })
+      const lateRecords = recordsBySelectedDate.records.filter(record => {
+        return record.arrived == true
+      })
+      return lateRecords.map(record => record.student_id)
+    }
+  }
+
   render() {
     return ( 
       <div>
         <div className="col-lg-12">
-          {this.props.currentUser.instructor ? <StudentsContainer selectedStudent={this.state.selectedStudent} selectStudent={this.selectStudent}/> : null}
+          {this.props.currentUser.instructor ? <StudentsContainer selectedStudent={this.state.selectedStudent} selectStudent={this.selectStudent} absentStudentIds={this.absentStudentIdsForSelectedDay()}/> : null}
           <div className='col-lg-6'>
             <DayPicker
             locale='us'
             disabledDays={this.isWeekend}
+            selectedDays={day => DateUtils.isSameDay(this.state.selectedDay, day)}
             initialMonth={ new Date(2016, 9) }
             onDayClick={this.selectDay}/> 
           </div>

@@ -16,7 +16,11 @@ class StudentsContainer extends React.Component {
     return ( 
       <div className="col-lg-4">
         <h2>Students</h2>
-        <StudentList students={this.props.students} selectedStudent={this.props.selectedStudent} selectStudent={this.props.selectStudent}/>
+        <StudentList 
+          students={this.props.students} 
+          selectedStudent={this.props.selectedStudent} 
+          selectStudent={this.props.selectStudent}
+          absentStudentIds={this.props.absentStudentIds}/>
       </div>
 
     )

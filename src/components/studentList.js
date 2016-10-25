@@ -1,5 +1,5 @@
 import React from 'react'
-import {ListGroup, ListGroupItem} from 'react-bootstrap'
+import {ListGroup, ListGroupItem, Tabs, Tab} from 'react-bootstrap'
 
 const StudentList = (props) => {
   function triggerSelectStudent(e) {
@@ -17,10 +17,42 @@ const StudentList = (props) => {
                 </ListGroupItem>
     })
   }
+
+  function absentStudentListItems() {
+    const absentStudents = props.students.filter((student) => {
+      return props.absentStudentIds.includes(student.id)
+    })
+    return absentStudents.map((student, i) => {
+      return <ListGroupItem 
+                key={i} 
+                onClick={triggerSelectStudent} 
+                id={student.id}
+                active={(props.selectedStudent && student.id == props.selectedStudent.id) ? true : false}>
+                  {student.first_name} {student.last_name}
+                </ListGroupItem>
+    })
+  }
+
+  function studentListGroup() {
+    return (
+      <ListGroup>
+        {studentListItems()}
+      </ListGroup>
+    )
+  }
+
+  function absentStudentListGroup() {
+    return (
+      <ListGroup style={{maxHeight: '400px', overflow-y: 'scroll'}}>
+        {absentStudentListItems()}
+      </ListGroup>
+    )
+  }
   return (
-    <ListGroup>
-      {studentListItems()}
-    </ListGroup>
+    <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
+      <Tab eventKey={1} title="late/absent">{absentStudentListGroup()}</Tab>
+      <Tab eventKey={2} title="all">{studentListGroup()}</Tab>
+    </Tabs>
   )
 }
 
