@@ -10,7 +10,8 @@ class AttendanceRecordContainer extends Component {
           <AttendanceRecordDetail 
             day={this.props.day} 
             student={this.props.student}
-            record={this.props.record}/> 
+            record={this.props.record}
+            currentUser={this.props.currentUser}/> 
         </div>
       </div>
         )
