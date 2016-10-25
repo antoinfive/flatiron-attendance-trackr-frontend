@@ -5,7 +5,6 @@ import * as instructorActions from '../../actions/instructorActions';
 import StudentList from '../studentList';
 
 class StudentsContainer extends React.Component {
-
   componentDidMount() {
     if (this.props.students.length == 0) {
       this.props.actions.fetchStudents();
@@ -17,7 +16,7 @@ class StudentsContainer extends React.Component {
     return ( 
       <div className="col-lg-4">
         <h2>Students</h2>
-        <StudentList students={this.props.students} />
+        <StudentList students={this.props.students} selectedStudent={this.props.selectedStudent} selectStudent={this.props.selectStudent}/>
       </div>
 
     )

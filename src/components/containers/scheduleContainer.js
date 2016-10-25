@@ -11,6 +11,12 @@ import * as instructorActions from '../../actions/instructorActions';
 
 class ScheduleContainer extends React.Component {
 
+  constructor(props) {
+    super(props)
+    this.state = {selectedStudent: null, selectedDay: 'Tuesday, Jan. 10th'}
+    this.selectStudent = this.selectStudent.bind(this)
+  }
+
   currentUserPresent() {
     return Object.keys(this.props.currentUser).length > 0 ? true : false
   }
@@ -27,17 +33,22 @@ class ScheduleContainer extends React.Component {
 
   }
 
+  selectStudent(studentId) {
+    const student = this.props.students.find(student => student.id == studentId)
+    this.setState({selectedStudent: student})
+  }
+
   render() {
     return ( 
       <div>
         <div className="col-lg-12">
-          {this.props.currentUser.instructor ? <StudentsContainer /> : null}
+          {this.props.currentUser.instructor ? <StudentsContainer selectedStudent={this.state.selectedStudent} selectStudent={this.selectStudent}/> : null}
           <div className='col-lg-6'>
             <DayPicker
             initialMonth={ new Date(2016, 9) }
             onDayClick={(event, day) => {console.log(day)}}/> 
           </div>
-          <AttendanceRecordContainer />
+          <AttendanceRecordContainer day={this.state.selectedDay} student={this.state.selectedStudent}/>
         </div>
       </div>
 
