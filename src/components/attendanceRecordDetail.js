@@ -8,9 +8,16 @@ const AttendanceRecordDetail = (props) => {
       return <p>record for: {props.student.first_name} {props.student.last_name}</p>
     }
   }
+
+  function recordInfo() {
+    if (props.record) {
+      return <p>arrived: {props.record.arrived ? 'present' : 'absent or late'}, at: {props.record.created_at}</p>
+    }
+  }
   return (
     <div className="col-sm-12 text-center">
       {studentInfo()}
+      {recordInfo()}
       <p>Today is {props.day}</p>
       <SignInButton />
     </div>

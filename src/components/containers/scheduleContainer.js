@@ -13,7 +13,7 @@ class ScheduleContainer extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = {selectedStudent: null, selectedDay: 'Tuesday, Jan. 10th'}
+    this.state = {selectedStudent: null, selectedRecord: null, selectedDay: '2016-08-08T00:00:00.000Z'}
     this.selectStudent = this.selectStudent.bind(this)
   }
 
@@ -35,7 +35,11 @@ class ScheduleContainer extends React.Component {
 
   selectStudent(studentId) {
     const student = this.props.students.find(student => student.id == studentId)
-    this.setState({selectedStudent: student})
+    const recordsBySelectedDate = this.props.attendanceRecords.find(recordsByDate => {
+      return recordsByDate.date == this.state.selectedDay
+    })
+    const record = recordsBySelectedDate.records.find(record => record.student_id == studentId)
+    this.setState({selectedStudent: student, selectedRecord: record})
   }
 
   render() {
@@ -48,7 +52,10 @@ class ScheduleContainer extends React.Component {
             initialMonth={ new Date(2016, 9) }
             onDayClick={(event, day) => {console.log(day)}}/> 
           </div>
-          <AttendanceRecordContainer day={this.state.selectedDay} student={this.state.selectedStudent}/>
+          <AttendanceRecordContainer 
+            day={this.state.selectedDay} 
+            student={this.state.selectedStudent} 
+            record={this.state.selectedRecord}/>
         </div>
       </div>
 

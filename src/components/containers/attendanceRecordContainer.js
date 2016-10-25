@@ -7,7 +7,10 @@ class AttendanceRecordContainer extends Component {
     return (
       <div className="jumbotron col-lg-8 text-center">
         <div className="col-sm-12">
-          <AttendanceRecordDetail day={this.props.day} student={this.props.student}/> 
+          <AttendanceRecordDetail 
+            day={this.props.day} 
+            student={this.props.student}
+            record={this.props.record}/> 
         </div>
       </div>
         )
