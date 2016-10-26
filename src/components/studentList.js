@@ -35,7 +35,7 @@ const StudentList = (props) => {
 
   function studentListGroup() {
     return (
-      <ListGroup>
+      <ListGroup style={{height: '400px', maxHeight: '400px', overflowY: 'scroll'}}>
         {studentListItems()}
       </ListGroup>
     )
@@ -43,7 +43,7 @@ const StudentList = (props) => {
 
   function absentStudentListGroup() {
     return (
-      <ListGroup style={{maxHeight: '400px', overflow-y: 'scroll'}}>
+      <ListGroup style={{height: '400px', maxHeight: '400px', overflowY: 'scroll'}}>
         {absentStudentListItems()}
       </ListGroup>
     )

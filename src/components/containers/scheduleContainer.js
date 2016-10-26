@@ -3,7 +3,7 @@ import DayPicker, { DateUtils } from 'react-day-picker'
 import "../../assets/calendar-style.css"
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import Moment from 'react-moment';
+import '../../styles/absent-present-calendar.css';
 import AttendanceRecordContainer from './attendanceRecordContainer';
 import StudentsContainer from './studentsContainer';
 import * as currentUserActions from '../../actions/currentUserActions';
@@ -72,20 +72,38 @@ class ScheduleContainer extends React.Component {
           const date = new Date(recordsByDate.date)
           return date.toDateString() == that.state.selectedDay.toDateString()
         })
-      const lateRecords = recordsBySelectedDate.records.filter(record => {
-        return record.arrived == true
-      })
-      return lateRecords.map(record => record.student_id)
+      if (recordsBySelectedDate) {  
+        const lateRecords = recordsBySelectedDate.records.filter(record => {
+          return record.arrived == false
+        })
+        return lateRecords.map(record => record.student_id)
+      }
+    } else {
+      return []
     }
   }
 
+  studentsAbsentOnDay() {
+    return this.props.attendanceRecords.map(recordsByDate => {
+      if (recordsByDate.records.some(rec => rec.arrived == false)) {
+        return recordsByDate
+      }
+    }).filter(recordsByDate => recordsByDate).map(recordsByDate => new Date(recordsByDate.date).toDateString())
+  }
+
   render() {
+    const modifiers = {
+      absent: day => (this.studentsAbsentOnDay().includes(day.toDateString()) && !this.isWeekend(day)),
+      present: day => (!this.studentsAbsentOnDay().includes(day.toDateString()) && !this.isWeekend(day))
+    };
+
     return ( 
       <div>
         <div className="col-lg-12">
           {this.props.currentUser.instructor ? <StudentsContainer selectedStudent={this.state.selectedStudent} selectStudent={this.selectStudent} absentStudentIds={this.absentStudentIdsForSelectedDay()}/> : null}
           <div className='col-lg-6'>
             <DayPicker
+            modifiers={modifiers}
             locale='us'
             disabledDays={this.isWeekend}
             selectedDays={day => DateUtils.isSameDay(this.state.selectedDay, day)}
