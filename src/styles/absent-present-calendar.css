@@ -1,0 +1,21 @@
+div.DayPicker-Day.DayPicker-Day--present {
+  background-color: #c4d8c4;
+}
+
+div.DayPicker-Day.DayPicker-Day--absent {
+  background-color: #dfb3b2;
+}
+
+div.DayPicker-Day.DayPicker-Day--absent.DayPicker-Day--selected {
+  background-color: #d9534f;
+}
+
+div.DayPicker-Day.DayPicker-Day--present.DayPicker-Day--selected {
+  background-color: #5cb85c;
+}
+
+div.DayPicker-Day.DayPicker-Day--today{
+  color: black;
+  font-weight: bold;
+}
+

@@ -4,12 +4,12 @@ import App from './components/App';
 import HomePage from './components/common/HomePage';
 import LogInPage from './components/LogInPage';
 import auth from './auth/authenticator';
-
+import ScheduleContainer from './components/containers/scheduleContainer'
 
 export default (
   <Route path="/" component={App}>
     <Route path="/login" component={LogInPage} />
-    <IndexRoute component={HomePage} onEnter={authenticate}/>
+    <IndexRoute component={ScheduleContainer} onEnter={authenticate}/>
    </Route> 
 );
 

@@ -62,16 +62,21 @@ app.get('/fetchCurrentUser', function(req, res, next) {
 
 app.get('/fetchAttendanceRecords', function(req, res) {
   request({
-    url: 'http://localhost:5000/api/schedules/1/attendance_records',
+    url: 'http://localhost:5000/api/attendance_records',
     headers: {
       "Authorization": `Bearer ${session.jwt}`
     }
   }).pipe(res)
 })
 
-// app.get('/getStudents', function(req, res) {
-//   // api call to rails using token from req.session.jwt
-// })
+app.get('/fetchStudents', function(req, res) {
+  request({
+    url: 'http://localhost:5000/api/students',
+    headers: {
+      "Authorization": `Bearer ${session.jwt}`
+    }
+  }).pipe(res)
+})
 
 app.get('*', function(req, res) {
   console.log('inside home')
