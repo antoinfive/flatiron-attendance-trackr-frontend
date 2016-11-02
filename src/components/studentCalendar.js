@@ -1,7 +1,7 @@
 import React from 'react' 
 import DayPicker, { DateUtils } from 'react-day-picker'
 
-const StudentCalendar = (props) => {
+export default (props) => {
 
   return (
     <div className='col-lg-6'>
@@ -15,3 +15,5 @@ const StudentCalendar = (props) => {
 
 
 }
+
+
