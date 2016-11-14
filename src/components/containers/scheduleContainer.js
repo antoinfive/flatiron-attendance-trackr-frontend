@@ -1,10 +1,11 @@
+
 import React from 'react';
 import DayPicker, { DateUtils } from 'react-day-picker'
 import "../../assets/calendar-style.css"
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import '../../styles/absent-present-calendar.css';
-import AttendanceRecordContainer from './attendanceRecordContainer';
+import AttendanceRecordShow from '../attendanceRecordShow';
 import StudentsContainer from './studentsContainer';
 import * as currentUserActions from '../../actions/currentUserActions';
 import * as attendanceRecordActions from '../../actions/attendanceRecordActions';
@@ -110,7 +111,7 @@ class ScheduleContainer extends React.Component {
             initialMonth={ new Date(2016, 9) }
             onDayClick={this.selectDay}/> 
           </div>
-          <AttendanceRecordContainer 
+          <AttendanceRecordShow 
             day={this.state.selectedDay} 
             student={this.state.selectedStudent} 
             record={this.state.selectedRecord}
