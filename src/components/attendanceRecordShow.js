@@ -20,13 +20,18 @@ const AttendanceRecordDetail = (props) => {
     }
   }
   return (
-    <div className="col-sm-12 text-center">
-      {studentInfo()}
-      {recordInfo()}
-      <p>{props.day.toDateString()}</p>
-      {props.currentUser.instructor ? null : <SignInButton />}
+    <div className="jumbotron col-lg-8 text-center">
+      <div className="col-sm-12">
+        <div className="col-sm-12 text-center">
+          {studentInfo()}
+          {recordInfo()}
+          <p>{props.day.toDateString()}</p>
+          {props.currentUser.instructor ? null : <SignInButton />}
+        </div>
+      </div>
     </div>
   )
 }
 
 export default AttendanceRecordDetail
+

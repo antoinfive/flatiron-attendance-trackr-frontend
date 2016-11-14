@@ -124,6 +124,7 @@ class ScheduleContainer extends React.Component {
 }
 
 function mapStateToProps(state, ownProps) {
+  debugger;
   if (state.currentUser.instructor) {    
     return {currentUser: state.currentUser, attendanceRecords: state.attendanceRecords, students: state.students}
   } else {
